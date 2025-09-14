@@ -1,12 +1,11 @@
 import React from 'react';
-import { Box, Container } from '@chakra-ui/react';
+import { Container } from '@chakra-ui/react';
+import Game from '../components/game/Game';
 
 const Test = () => {
   return (
     <Container maxW="container.lg">
-      <Box>
-        {/* Empty Test page */}
-      </Box>
+      <Game />
     </Container>
   );
 };
