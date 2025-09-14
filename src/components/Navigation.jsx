@@ -1,27 +1,22 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
+import { Box, Flex, Link, Text } from '@chakra-ui/react';
 
 const Navigation = () => {
   return (
-    <nav style={{ marginBottom: '20px', padding: '10px', borderBottom: '1px solid #ccc' }}>
-      <ul style={{ listStyle: 'none', display: 'flex', gap: '20px', margin: 0, padding: 0 }}>
-        <li>
-          <Link to="/" style={{ textDecoration: 'none', color: '#007bff' }}>
-            Home
-          </Link>
-        </li>
-        <li>
-          <Link to="/about" style={{ textDecoration: 'none', color: '#007bff' }}>
-            About
-          </Link>
-        </li>
-        <li>
-          <Link to="/contact" style={{ textDecoration: 'none', color: '#007bff' }}>
-            Contact
-          </Link>
-        </li>
-      </ul>
-    </nav>
+    <Box borderBottom="1px" borderColor="gray.200" py={4} mb={6}>
+      <Flex gap={8} align="center">
+        <Link as={RouterLink} to="/" color="blue.500" fontWeight="medium" _hover={{ color: "blue.600" }}>
+          Home
+        </Link>
+        <Link as={RouterLink} to="/about" color="blue.500" fontWeight="medium" _hover={{ color: "blue.600" }}>
+          About
+        </Link>
+        <Link as={RouterLink} to="/test" color="blue.500" fontWeight="medium" _hover={{ color: "blue.600" }}>
+          Test
+        </Link>
+      </Flex>
+    </Box>
   );
 };
 
