@@ -1,7 +1,7 @@
 // Utility function to generate polygon points for any n-sided shape
 export const config = {
-  boardWidth: 600,
-  boardHeight: 400,
+  boardWidth: 800,
+  boardHeight: 600,
   maxShapes: 10,
   maxAttempts: 100
 }
@@ -50,10 +50,8 @@ const shapeCombinationExists = (shapeType, color, existingShapes) => {
 
 // Generate a position that doesn't overlap with existing shapes
 const generateNonOverlappingPosition = (existingShapes, maxAttempts = 50) => {
-  // const gameBoardWidth = 600;
-  // const gameBoardHeight = 400;
-  const margin = 40; // Keep shapes away from edges
-  const minDistance = 60; // Minimum distance between shape centers
+  const margin = 60; // Keep shapes away from edges (increased for larger board)
+  const minDistance = 80; // Minimum distance between shape centers (increased for better spacing)
   
   for (let attempt = 0; attempt < maxAttempts; attempt++) {
     const x = margin + Math.random() * (config.boardWidth - 2 * margin);
@@ -100,7 +98,7 @@ export const generateRandomShape = (id, existingShapes = []) => {
   // If we couldn't find a unique combination, use the last generated one
   // This can happen if we have many shapes and limited combinations
   
-  const size = 25 + Math.random() * 15; // Random size between 25-40
+  const size = 30 + Math.random() * 20; // Random size between 30-50 (increased for larger board)
   
   // Generate non-overlapping position
   const position = generateNonOverlappingPosition(existingShapes);

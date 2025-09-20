@@ -1,12 +1,12 @@
 import React from 'react';
-import { Container } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import Game from '../components/game/Game';
 
 const Test = () => {
   return (
-    <Container maxW="container.lg" p={0}>
+    <Box width="100%" height="calc(100vh - 120px)" p={0}>
       <Game />
-    </Container>
+    </Box>
   );
 };
 

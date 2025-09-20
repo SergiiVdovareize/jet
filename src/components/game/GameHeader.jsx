@@ -6,9 +6,9 @@ const GameHeader = ({ gameState, onStartGame }) => {
   
   return (
     <Box textAlign="center" mb={6}>
-      <Heading as="h1" size="xl" mb={4} color="gray.800">
+      {/* <Heading as="h1" size="xl" mb={4} color="gray.800">
         Shape Matching Game
-      </Heading>
+      </Heading> */}
       
       {gameActive ? (
         <Box>
@@ -21,9 +21,9 @@ const GameHeader = ({ gameState, onStartGame }) => {
         </Box>
       ) : (
         <Box>
-          <Text fontSize="lg" mb={4}>
+          {/* <Text fontSize="lg" mb={4}>
             {score > 0 ? `Game Over! Final Score: ${score}` : 'Click Start to begin!'}
-          </Text>
+          </Text> */}
           <Button colorScheme="blue" onClick={onStartGame} size="lg">
             {score > 0 ? 'Play Again' : 'Start Game'}
           </Button>

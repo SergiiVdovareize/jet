@@ -85,15 +85,23 @@ const Game = () => {
   };
   
   return (
-    <Box p={0}>
+    <Box 
+      p={0} 
+      height="100vh" 
+      display="flex" 
+      flexDirection="column"
+      maxHeight="100vh"
+    >
       <GameHeader gameState={gameState} onStartGame={startGame} />
       
       {gameState.gameActive && (
-        <GameBoard 
-          shapes={gameState.shapes}
-          targetShape={gameState.targetShape}
-          onShapeClick={handleShapeClick}
-        />
+        <Box flex="1" minHeight="0">
+          <GameBoard 
+            shapes={gameState.shapes}
+            targetShape={gameState.targetShape}
+            onShapeClick={handleShapeClick}
+          />
+        </Box>
       )}
       
       <GameHistory gameHistory={gameHistory} />
