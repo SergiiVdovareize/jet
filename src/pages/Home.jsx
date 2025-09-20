@@ -9,7 +9,7 @@ const Home = () => {
           Home Page
         </Heading>
         <Text fontSize="lg" color="gray.600" lineHeight="tall">
-          Welcome to the home page! This is your main landing page with Chakra UI styling.
+          Welcome to the home page!
         </Text>
       </Box>
     </Container>

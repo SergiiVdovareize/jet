@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "predeploy": "npm run build",
-    "deploy": "cp public/CNAME build/CNAME && gh-pages -d build",
+    "deploy": "cp public/CNAME dist/CNAME && gh-pages -d dist",
     "postdeploy": "echo 'Reactive deployment initialized'",
     "preview": "vite preview"
   },
