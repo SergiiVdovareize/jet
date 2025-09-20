@@ -6,7 +6,25 @@ export const config = {
   maxAttempts: 100
 }
 
-export const generatePolygonPoints = (sides, size = 50, centerX = 0, centerY = 0) => {
+// Calculate responsive shape size based on screen dimensions
+export const getResponsiveShapeSize = (baseSize = 30, screenWidth = window.innerWidth) => {
+  // Mobile breakpoints
+  if (screenWidth <= 480) {
+    // Small mobile devices - larger shapes for better touch interaction
+    return baseSize * 2;
+  } else if (screenWidth <= 768) {
+    // Medium mobile devices/tablets
+    return baseSize * 1.8;
+  } else if (screenWidth <= 1024) {
+    // Small tablets/large phones
+    return baseSize * 1.4;
+  } else {
+    // Desktop - use base size
+    return baseSize;
+  }
+}
+
+export const generatePolygonPoints = (sides, size = getResponsiveShapeSize(50), centerX = 0, centerY = 0) => {
   const points = [];
   const angleStep = (2 * Math.PI) / sides;
   
@@ -98,7 +116,9 @@ export const generateRandomShape = (id, existingShapes = []) => {
   // If we couldn't find a unique combination, use the last generated one
   // This can happen if we have many shapes and limited combinations
   
-  const size = 30 + Math.random() * 20; // Random size between 30-50 (increased for larger board)
+  // Calculate responsive base size
+  const baseSize = 30 + Math.random() * 20; // Random base size between 30-50
+  const size = getResponsiveShapeSize(baseSize); // Apply responsive scaling
   
   // Generate non-overlapping position
   const position = generateNonOverlappingPosition(existingShapes);
