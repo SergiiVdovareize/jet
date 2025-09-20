@@ -5,7 +5,7 @@ import { config } from '../../utils/shapeUtils';
 
 const GameBoard = ({ shapes, targetShape, onShapeClick }) => {
   return (
-    <Box>
+    <Box p={0}>
       <svg width={config.boardWidth} height={config.boardHeight} style={{ border: '2px solid #ccc', borderRadius: '8px' }}>
         {shapes.map((shape) => (
           <Shape

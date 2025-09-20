@@ -4,7 +4,7 @@ import Game from '../components/game/Game';
 
 const Test = () => {
   return (
-    <Container maxW="container.lg">
+    <Container maxW="container.lg" p={0}>
       <Game />
     </Container>
   );

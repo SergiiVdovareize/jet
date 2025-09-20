@@ -85,7 +85,7 @@ const Game = () => {
   };
   
   return (
-    <Box>
+    <Box p={0}>
       <GameHeader gameState={gameState} onStartGame={startGame} />
       
       {gameState.gameActive && (
