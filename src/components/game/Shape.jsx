@@ -7,6 +7,8 @@ const Shape = ({ shape, onClick, isTarget }) => {
   const renderShape = () => {
     const centerX = x;
     const centerY = y;
+    const stroke = isTarget ? 'black' : 'transparent';
+    const strokeWidth = isTarget ? 1 : 0
     
     switch (type) {
       case 'circle': {
@@ -16,8 +18,8 @@ const Shape = ({ shape, onClick, isTarget }) => {
             cy={centerY}
             r={size}
             fill={color}
-            // stroke={isTarget ? 'black' : 'transparent'}
-            // strokeWidth={isTarget ? 3 : 0}
+            stroke={stroke}
+            strokeWidth={strokeWidth}
           />
         );
       }
@@ -28,8 +30,8 @@ const Shape = ({ shape, onClick, isTarget }) => {
           <polygon
             points={points}
             fill={color}
-            // stroke={isTarget ? 'black' : 'transparent'}
-            // strokeWidth={isTarget ? 3 : 0}
+            stroke={stroke}
+            strokeWidth={strokeWidth}
           />
         );
       }

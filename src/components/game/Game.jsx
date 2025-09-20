@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box } from '@chakra-ui/react';
-import { generateRandomShape, generateGameState } from '../../utils/shapeUtils';
+import { generateGameState, generateNewRound } from '../../utils/shapeUtils';
 import GameHeader from './GameHeader';
 import GameBoard from './GameBoard';
 import GameHistory from './GameHistory';
@@ -55,9 +55,8 @@ const Game = () => {
                      clickedShape.color === gameState.targetShape.color;
     
     if (isCorrect) {
-      // Correct answer - generate new round
-      const newShapes = Array.from({ length: 6 }, (_, i) => generateRandomShape(i));
-      const newTargetShape = newShapes[Math.floor(Math.random() * newShapes.length)];
+      // Correct answer - generate new round with non-overlapping shapes
+      const { shapes: newShapes, targetShape: newTargetShape } = generateNewRound();
       
       setGameState(prev => ({
         ...prev,

@@ -1,11 +1,12 @@
 import React from 'react';
 import { Box } from '@chakra-ui/react';
 import Shape from './Shape';
+import { config } from '../../utils/shapeUtils';
 
 const GameBoard = ({ shapes, targetShape, onShapeClick }) => {
   return (
     <Box>
-      <svg width="600" height="400" style={{ border: '2px solid #ccc', borderRadius: '8px' }}>
+      <svg width={config.boardWidth} height={config.boardHeight} style={{ border: '2px solid #ccc', borderRadius: '8px' }}>
         {shapes.map((shape) => (
           <Shape
             key={shape.id}
