@@ -9,7 +9,7 @@ const GameBoard = ({ shapes, targetShape, onShapeClick }) => {
       p={0} 
       width="100%" 
       height="100%" 
-      minHeight="400px"
+      minHeight={{ base: "300px", md: "400px" }}
       display="flex"
       justifyContent="center"
       alignItems="center"

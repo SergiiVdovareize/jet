@@ -87,10 +87,10 @@ const Game = () => {
   return (
     <Box 
       p={0} 
-      height="100vh" 
+      height="100%" 
       display="flex" 
       flexDirection="column"
-      maxHeight="100vh"
+      minHeight="0"
     >
       <GameHeader gameState={gameState} onStartGame={startGame} />
       
@@ -104,7 +104,9 @@ const Game = () => {
         </Box>
       )}
       
-      <GameHistory gameHistory={gameHistory} />
+      {!gameState.gameActive && (
+        <GameHistory gameHistory={gameHistory} />
+      )}
     </Box>
   );
 };
