@@ -6,7 +6,7 @@ const Home = () => {
     <Container maxW="container.lg">
       <Box>
         <Heading as="h1" size="xl" mb={4} color="gray.800">
-          Home Page
+          This is the Home Page
         </Heading>
         <Text fontSize="lg" color="gray.600" lineHeight="tall">
           Welcome to the home page!
