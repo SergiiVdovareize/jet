@@ -10,13 +10,14 @@ const Game = () => {
     shapes: [],
     targetShape: null,
     score: 0,
-    timeLeft: 30,
+    timeLeft: 337,
     gameActive: false,
     difficulty: 1
   });
   
   const [gameHistory, setGameHistory] = useState([]);
   const [timer, setTimer] = useState(null);
+  const [boardConfig, setBoardConfig] = useState({});
   
   // Clean up timer on unmount
   useEffect(() => {
@@ -26,10 +27,24 @@ const Game = () => {
       }
     };
   }, [timer]);
+
+  useEffect(() => {
+    if (boardConfig.width && boardConfig.height) {
+      startGame()
+    }
+  }, [boardConfig])
   
   // Start game
+  const activateGame = () => {
+      const newGameState = {
+        ...gameState,
+        gameActive: true
+      }
+      setGameState(newGameState)
+  }
+
   const startGame = () => {
-    const newGameState = generateGameState();
+    const newGameState = generateGameState(boardConfig);
     setGameState(newGameState);
     setGameHistory([]);
     
@@ -46,6 +61,13 @@ const Game = () => {
     
     setTimer(newTimer);
   };
+
+  const handleBoardInitialization = (config) => {
+    if (!!config.width && !!config.height && !gameState.shapes?.length) {
+      console.log('handleBoardInitialization', config)
+      setBoardConfig(config)
+    }
+  }
   
   // Handle shape click
   const handleShapeClick = (clickedShape) => {
@@ -56,7 +78,7 @@ const Game = () => {
     
     if (isCorrect) {
       // Correct answer - generate new round with non-overlapping shapes
-      const { shapes: newShapes, targetShape: newTargetShape } = generateNewRound();
+      const { shapes: newShapes, targetShape: newTargetShape } = generateNewRound(boardConfig);
       
       setGameState(prev => ({
         ...prev,
@@ -92,7 +114,7 @@ const Game = () => {
       flexDirection="column"
       minHeight="0"
     >
-      <GameHeader gameState={gameState} onStartGame={startGame} />
+      <GameHeader gameState={gameState} onStartGame={activateGame} />
       
       {gameState.gameActive && (
         <Box flex="1" minHeight="0">
@@ -100,6 +122,7 @@ const Game = () => {
             shapes={gameState.shapes}
             targetShape={gameState.targetShape}
             onShapeClick={handleShapeClick}
+            onBoardInitialized={handleBoardInitialization}
           />
         </Box>
       )}

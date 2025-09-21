@@ -1,13 +1,14 @@
 // Utility function to generate polygon points for any n-sided shape
 export const config = {
-  boardWidth: 800,
-  boardHeight: 600,
+  boardWidth: 328,
+  boardHeight: 544,
   maxShapes: 10,
   maxAttempts: 100
 }
 
 // Calculate responsive shape size based on screen dimensions
 export const getResponsiveShapeSize = (baseSize = 30, screenWidth = window.innerWidth) => {
+  return baseSize;
   // Mobile breakpoints
   if (screenWidth <= 480) {
     // Small mobile devices - larger shapes for better touch interaction
@@ -67,13 +68,13 @@ const shapeCombinationExists = (shapeType, color, existingShapes) => {
 };
 
 // Generate a position that doesn't overlap with existing shapes
-const generateNonOverlappingPosition = (existingShapes, maxAttempts = 50) => {
-  const margin = 60; // Keep shapes away from edges (increased for larger board)
+const generateNonOverlappingPosition = (existingShapes, boardConfig, maxAttempts = 50) => {
+  const margin = 40; // Keep shapes away from edges (increased for larger board)
   const minDistance = 80; // Minimum distance between shape centers (increased for better spacing)
   
   for (let attempt = 0; attempt < maxAttempts; attempt++) {
-    const x = margin + Math.random() * (config.boardWidth - 2 * margin);
-    const y = margin + Math.random() * (config.boardHeight - 2 * margin);
+    const x = margin + Math.random() * (boardConfig.width - 2 * margin);
+    const y = margin + Math.random() * (boardConfig.height - 2 * margin);
     
     const newPosition = { x, y };
     
@@ -89,13 +90,13 @@ const generateNonOverlappingPosition = (existingShapes, maxAttempts = 50) => {
   
   // If we can't find a non-overlapping position, return a random one
   return {
-    x: margin + Math.random() * (config.boardWidth - 2 * margin),
-    y: margin + Math.random() * (config.boardHeight - 2 * margin)
+    x: margin + Math.random() * (boardConfig.width - 2 * margin),
+    y: margin + Math.random() * (boardConfig.height - 2 * margin)
   };
 };
 
 // Generate random shape configuration with non-overlapping positions and unique combinations
-export const generateRandomShape = (id, existingShapes = []) => {
+export const generateRandomShape = (id, existingShapes = [], boardConfig) => {
   const shapes = ['circle', 'triangle', 'square', 'pentagon', 'hexagon', 'heptagon', 'octagon'];
   const colors = ['red', 'blue', 'green', 'yellow', 'purple', 'orange', 'pink', 'cyan'];
   
@@ -121,7 +122,7 @@ export const generateRandomShape = (id, existingShapes = []) => {
   const size = getResponsiveShapeSize(baseSize); // Apply responsive scaling
   
   // Generate non-overlapping position
-  const position = generateNonOverlappingPosition(existingShapes);
+  const position = generateNonOverlappingPosition(existingShapes, boardConfig);
   
   return {
     id,
@@ -134,26 +135,26 @@ export const generateRandomShape = (id, existingShapes = []) => {
 };
 
 // Generate initial game state with non-overlapping shapes and unique combinations
-export const generateGameState = () => {
-  const { shapes, targetShape } = generateNewRound();
+export const generateGameState = (boardConfig) => {
+  const { shapes, targetShape } = generateNewRound(boardConfig);
   
   return {
     shapes,
     targetShape,
     score: 0,
-    timeLeft: 30,
+    timeLeft: 330,
     gameActive: true,
     difficulty: 1
   };
 };
 
 // Generate new shapes for a round with non-overlapping positions and unique combinations
-export const generateNewRound = () => {
+export const generateNewRound = (boardConfig) => {
   const shapes = [];
   
   // Generate 6 shapes with non-overlapping positions and unique combinations
   for (let i = 0; i < config.maxShapes; i++) {
-    const newShape = generateRandomShape(i, shapes);
+    const newShape = generateRandomShape(i, shapes, boardConfig);
     shapes.push(newShape);
   }
   
