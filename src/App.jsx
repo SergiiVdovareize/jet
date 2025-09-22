@@ -11,7 +11,7 @@ function App() {
   return (
     <Router>
       <Box bg="gray.50">
-        <Box maxW="1200px" mx="auto" p={4} h="100vh" flex="1" display="flex" flexDirection="column">
+        <Box maxW="1200px" mx="auto" p={4} h="100dvh" flex="1" display="flex" flexDirection="column">
           <Navigation />
           <Routes>
             <Route path="/" element={<Home />} />
