@@ -122,7 +122,7 @@ const Game = () => {
       <GameHeader gameState={gameState} onStartGame={activateGame} />
       
       {gameState.gameActive && (
-        <Box flex="1" minHeight="0">
+        <Box flex="auto" minHeight="0">
           <GameBoard 
             shapes={gameState.shapes}
             targetShape={gameState.targetShape}
