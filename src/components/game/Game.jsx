@@ -18,6 +18,7 @@ const Game = () => {
   const [gameHistory, setGameHistory] = useState([]);
   const [timer, setTimer] = useState(null);
   const [boardConfig, setBoardConfig] = useState({});
+  const [missClicked, setMissClicked] = useState(false);
   
   // Clean up timer on unmount
   useEffect(() => {
@@ -96,6 +97,10 @@ const Game = () => {
         timestamp: Date.now()
       }]);
     } else {
+      setMissClicked(true)
+      setTimeout(() => {
+        setMissClicked(false)
+      }, 600)
       // Wrong answer
       setGameHistory(prev => [...prev, { 
         target: gameState.targetShape, 
@@ -123,6 +128,7 @@ const Game = () => {
             targetShape={gameState.targetShape}
             onShapeClick={handleShapeClick}
             onBoardInitialized={handleBoardInitialization}
+            missClick={missClicked}
           />
         </Box>
       )}

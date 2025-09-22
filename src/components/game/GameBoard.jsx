@@ -1,15 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Box } from '@chakra-ui/react';
+import styles from './GameBoard.module.css';
 import Shape from './Shape';
-import { config } from '../../utils/shapeUtils';
+// import { config } from '../../utils/shapeUtils';
 
-const GameBoard = ({ shapes, targetShape, onShapeClick, onBoardInitialized }) => {
+const GameBoard = ({ shapes, targetShape, onShapeClick, onBoardInitialized, missClick }) => {
   const wrapperRef = useRef(null);
   const [wrapperSize, setWrapperSize] = useState({ width: 0, height: 0 });
-
-
-
-  // console.log('wrapperRef', wrapperRef.current)
 
   useEffect(() => {
     const { offsetWidth, offsetHeight } = wrapperRef.current;
@@ -18,34 +15,28 @@ const GameBoard = ({ shapes, targetShape, onShapeClick, onBoardInitialized }) =>
       height: offsetHeight
     }
     setWrapperSize(boardConfig);
-    // onBoardInitialized(boardConfig)
   }, [])
 
   useEffect(() => {
     onBoardInitialized(wrapperSize)
   }, [wrapperSize, onBoardInitialized])
 
+  useEffect(() => {
+    if (missClick) {
+      console.log('23232')
+    }
+  }, [missClick])
+
   return (
     <Box 
-      p={0} 
-      width="100%" 
-      height="100%" 
-      // minHeight={{ base: "300px", md: "400px" }}
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
+      className={styles.boardWrapper}
       ref={wrapperRef}
     >
       <svg 
         width="100%" 
         height="100%" 
         viewBox={`0 0 ${wrapperSize.width} ${wrapperSize.height}`}
-        style={{ 
-          border: '2px solid #ccc', 
-          borderRadius: '8px',
-          maxWidth: '100%',
-          maxHeight: '100%'
-        }}
+        className={`${styles.boardSvg} ${missClick ? styles.missClick : ''}`}
         preserveAspectRatio="xMidYMid meet"
       >
         {shapes.map((shape) => (
