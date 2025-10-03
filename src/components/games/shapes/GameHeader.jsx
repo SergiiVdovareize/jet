@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Heading, Text, Button } from '@chakra-ui/react';
+import { getLocalizedShapeName } from '../../../utils/shapeUtils';
 
 const GameHeader = ({ gameState, onStartGame }) => {
   const { gameActive, targetShape, score, timeLeft, difficulty } = gameState;
@@ -14,7 +15,7 @@ const GameHeader = ({ gameState, onStartGame }) => {
       {(gameActive && !!targetShape) ? (
         <Box>
           <Text fontSize="lg" mb={2}>
-            Find: <strong>{targetShape.color} {targetShape.type}</strong>
+            Find: <strong>{getLocalizedShapeName(targetShape, 'uk')}</strong>
           </Text>
           <Text fontSize="md" color="blue.600">
             Score: {score} | Time: {timeLeft}s | Difficulty: {difficulty.toFixed(1)}

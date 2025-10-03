@@ -9,20 +9,20 @@ export const config = {
 // Calculate responsive shape size based on screen dimensions
 export const getResponsiveShapeSize = (baseSize = 30, screenWidth = window.innerWidth) => {
   return baseSize;
-  // Mobile breakpoints
-  if (screenWidth <= 480) {
-    // Small mobile devices - larger shapes for better touch interaction
-    return baseSize * 2;
-  } else if (screenWidth <= 768) {
-    // Medium mobile devices/tablets
-    return baseSize * 1.8;
-  } else if (screenWidth <= 1024) {
-    // Small tablets/large phones
-    return baseSize * 1.4;
-  } else {
-    // Desktop - use base size
-    return baseSize;
-  }
+  // // Mobile breakpoints
+  // if (screenWidth <= 480) {
+  //   // Small mobile devices - larger shapes for better touch interaction
+  //   return baseSize * 2;
+  // } else if (screenWidth <= 768) {
+  //   // Medium mobile devices/tablets
+  //   return baseSize * 1.8;
+  // } else if (screenWidth <= 1024) {
+  //   // Small tablets/large phones
+  //   return baseSize * 1.4;
+  // } else {
+  //   // Desktop - use base size
+  //   return baseSize;
+  // }
 }
 
 export const generatePolygonPoints = (sides, size = getResponsiveShapeSize(50), centerX = 0, centerY = 0) => {
@@ -162,4 +162,58 @@ export const generateNewRound = (boardConfig) => {
   const targetShape = shapes[Math.floor(Math.random() * shapes.length)];
   
   return { shapes, targetShape };
+};
+
+// Simple i18n dictionary for shape colors and names
+export const shapeI18n = {
+  en: {
+    colors: {
+      red: 'red',
+      blue: 'blue',
+      green: 'green',
+      yellow: 'yellow',
+      purple: 'purple',
+      orange: 'orange',
+      pink: 'pink',
+      cyan: 'cyan'
+    },
+    shapes: {
+      circle: 'circle',
+      triangle: 'triangle',
+      square: 'square',
+      pentagon: 'pentagon',
+      hexagon: 'hexagon',
+      heptagon: 'heptagon',
+      octagon: 'octagon'
+    }
+  },
+  uk: {
+    colors: {
+      red: 'червоний',
+      blue: 'синій',
+      green: 'зелений',
+      yellow: 'жовтий',
+      purple: 'фіолетовий',
+      orange: 'помаранчевий',
+      pink: 'рожевий',
+      cyan: 'блакитний'
+    },
+    shapes: {
+      circle: 'коло',
+      triangle: 'трикутник',
+      square: 'квадрат',
+      pentagon: "п'ятикутник",
+      hexagon: 'шестикутник',
+      heptagon: 'семикутник',
+      octagon: 'восьмикутник'
+    }
+  }
+};
+
+// Returns a localized label for a given shape like "green triangle"
+export const getLocalizedShapeName = (shape, locale = 'en') => {
+  const dict = shapeI18n[locale] || shapeI18n.en;
+  const colorLabel = dict.colors[shape.color] || shape.color;
+  const shapeLabel = dict.shapes[shape.type] || shape.type;
+  return `${colorLabel} ${shapeLabel}`;
 };
