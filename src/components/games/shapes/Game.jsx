@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import styles from './Game.module.css';
-import { Box } from '@chakra-ui/react';
+import styles from './Shapes.module.css';
+import { Box, Center } from '@chakra-ui/react';
 import { generateGameState, generateNewRound } from '../../../utils/shapeUtils';
 import { playMiss as playMissSfx, playSuccess as playSuccessSfx, close as closeSfx } from '../../../utils/sound';
 import GameHeader from './GameHeader';
@@ -123,16 +123,23 @@ const Game = () => {
       }]);
     }
   };
+
+  const activeGameWrapperStyles = gameState.gameActive ? {
+    border: '2px solid #8592a7',
+    borderRadius: '2px',
+  } : {}
+
+  console.log('activeGameWrapperStyles', activeGameWrapperStyles)
   
   return (
     <Box 
       p={0} 
-      paddingTop={2}
       height="100%" 
       display="flex" 
+      justifyContent='center'
       flexDirection="column"
       minHeight="0"
-      className={styles.gameWrapper}
+      {...activeGameWrapperStyles}
     >
       <GameHeader gameState={gameState} onStartGame={activateGame} />
       

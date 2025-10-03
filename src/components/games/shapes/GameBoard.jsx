@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Box } from '@chakra-ui/react';
-import styles from './GameBoard.module.css';
+import styles from './Shapes.module.css';
 import Shape from './Shape';
 // import { config } from '../../utils/shapeUtils';
 

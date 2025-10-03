@@ -142,7 +142,7 @@ export const generateGameState = (boardConfig) => {
     shapes,
     targetShape,
     score: 0,
-    timeLeft: 330,
+    timeLeft: 30,
     gameActive: true,
     difficulty: 1
   };

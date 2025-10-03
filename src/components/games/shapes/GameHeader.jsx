@@ -4,12 +4,13 @@ import { Box, Heading, Text, Button } from '@chakra-ui/react';
 const GameHeader = ({ gameState, onStartGame }) => {
   const { gameActive, targetShape, score, timeLeft, difficulty } = gameState;
 
+  const activeHeaderStyles = gameActive ? {
+    backgroundColor: '#d1e2f1',
+    borderBottom: '2px solid #8592a7'
+  } : {}
+
   return (
-    <Box textAlign="center" mb={6}>
-      {/* <Heading as="h1" size="xl" mb={4} color="gray.800">
-        Shape Matching Game
-      </Heading> */}
-      
+    <Box textAlign="center" mb={6} {...activeHeaderStyles} padding={'12px 0'} margin={0}>
       {(gameActive && !!targetShape) ? (
         <Box>
           <Text fontSize="lg" mb={2}>
@@ -21,9 +22,6 @@ const GameHeader = ({ gameState, onStartGame }) => {
         </Box>
       ) : (
         <Box>
-          {/* <Text fontSize="lg" mb={4}>
-            {score > 0 ? `Game Over! Final Score: ${score}` : 'Click Start to begin!'}
-          </Text> */}
           <Button colorScheme="blue" onClick={onStartGame} size="lg">
             {score > 0 ? 'Play Again' : 'Start Game'}
           </Button>
