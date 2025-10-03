@@ -2,7 +2,7 @@ import React from 'react';
 import { generatePolygonPoints, getShapeSides } from '../../../utils/shapeUtils';
 
 const Shape = ({ shape, onClick, isTarget }) => {
-  const { type, color, size, x, y } = shape;
+  const { type, color, size, x, y, rotation = 0 } = shape;
   
   const renderShape = () => {
     const centerX = x;
@@ -39,7 +39,7 @@ const Shape = ({ shape, onClick, isTarget }) => {
   };
   
   return (
-    <g onClick={() => onClick(shape)} style={{ cursor: 'pointer' }}>
+    <g onClick={() => onClick(shape)} style={{ cursor: 'pointer' }} transform={`rotate(${rotation} ${x} ${y})`}>
       {renderShape()}
     </g>
   );

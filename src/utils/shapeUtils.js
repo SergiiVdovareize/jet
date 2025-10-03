@@ -130,7 +130,8 @@ export const generateRandomShape = (id, existingShapes = [], boardConfig) => {
     color,
     size,
     x: position.x,
-    y: position.y
+    y: position.y,
+    rotation: Math.floor(Math.random() * 360)
   };
 };
 
