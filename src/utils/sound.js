@@ -60,6 +60,62 @@ export function playSuccess() {
   }
 }
 
+export function playStart() {
+  try {
+    const ctx = ensureContext();
+    if (!ctx) return;
+    const oscillator = ctx.createOscillator();
+    const gain = ctx.createGain();
+    oscillator.type = 'triangle';
+    oscillator.connect(gain);
+    gain.connect(ctx.destination);
+    const now = ctx.currentTime;
+    const step = 0.12;
+    // Gentle descending cadence: G5 -> E5 -> D5 -> C5
+    oscillator.frequency.setValueAtTime(523, now);
+    oscillator.frequency.setValueAtTime(587, now + step);
+    oscillator.frequency.setValueAtTime(659, now + step * 2);
+    oscillator.frequency.setValueAtTime(783, now + step * 3);
+    // Softer envelope with longer tail
+    gain.gain.setValueAtTime(0.001, now);
+    gain.gain.exponentialRampToValueAtTime(0.06, now + 0.03);
+    gain.gain.setValueAtTime(0.06, now + step * 3 + 0.06);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + step * 3 + 0.45);
+    oscillator.start(now);
+    oscillator.stop(now + step * 3 + 0.5);
+  } catch {
+    // ignore
+  }
+}
+
+export function playFinish() {
+  try {
+    const ctx = ensureContext();
+    if (!ctx) return;
+    const oscillator = ctx.createOscillator();
+    const gain = ctx.createGain();
+    oscillator.type = 'triangle';
+    oscillator.connect(gain);
+    gain.connect(ctx.destination);
+    const now = ctx.currentTime;
+    const step = 0.12;
+    // Gentle descending cadence: G5 -> E5 -> D5 -> C5
+    oscillator.frequency.setValueAtTime(783.99, now);
+    oscillator.frequency.setValueAtTime(659.25, now + step);
+    oscillator.frequency.setValueAtTime(587.33, now + step * 2);
+    oscillator.frequency.setValueAtTime(523.25, now + step * 3);
+    // Softer envelope with longer tail
+    gain.gain.setValueAtTime(0.001, now);
+    gain.gain.exponentialRampToValueAtTime(0.06, now + 0.03);
+    gain.gain.setValueAtTime(0.06, now + step * 3 + 0.06);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + step * 3 + 0.45);
+    oscillator.start(now);
+    oscillator.stop(now + step * 3 + 0.5);
+  } catch {
+    // ignore
+  }
+}
+
 export async function close() {
   try {
     if (audioContext && typeof audioContext.close === 'function') {
@@ -72,7 +128,7 @@ export async function close() {
   }
 }
 
-const Sound = { playMiss, playSuccess, close };
+const Sound = { playMiss, playSuccess, playStart, playFinish, close };
 export default Sound;
 
 

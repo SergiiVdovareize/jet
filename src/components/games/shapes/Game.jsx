@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import styles from './Shapes.module.css';
-import { Box, Center } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import { generateGameState, generateNewRound } from '../../../utils/shapeUtils';
-import { playMiss as playMissSfx, playSuccess as playSuccessSfx, close as closeSfx } from '../../../utils/sound';
+import { playMiss as playMissSfx, playSuccess as playSuccessSfx, playStart as playStartSfx, close as closeSfx, playFinish as playFinishSfx } from '../../../utils/sound';
 import GameHeader from './GameHeader';
 import GameBoard from './GameBoard';
 import GameHistory from './GameHistory';
@@ -22,14 +21,6 @@ const Game = () => {
   const [boardConfig, setBoardConfig] = useState({});
   const [missClicked, setMissClicked] = useState(false);
 
-  const playMissSound = () => {
-    playMissSfx();
-  };
-
-  const playSuccessSound = () => {
-    playSuccessSfx();
-  };
-  
   // Clean up timer on unmount
   useEffect(() => {
     return () => {
@@ -45,6 +36,15 @@ const Game = () => {
       startGame()
     }
   }, [boardConfig])
+
+  useEffect(() => {
+    if (gameState.gameActive) {
+      console.log('activated')
+      setTimeout(playStartSfx, 50)
+    } else {
+      setTimeout(playFinishSfx, 50)
+    }
+  }, [gameState.gameActive])
   
   // Start game
   const activateGame = () => {
@@ -52,6 +52,7 @@ const Game = () => {
         ...gameState,
         gameActive: true
       }
+      
       setGameState(newGameState)
   }
 
@@ -65,6 +66,7 @@ const Game = () => {
       setGameState(prev => {
         if (prev.timeLeft <= 1) {
           clearInterval(newTimer);
+          // playFinishSfx();
           return { ...prev, gameActive: false };
         }
         return { ...prev, timeLeft: prev.timeLeft - 1 };
@@ -76,7 +78,6 @@ const Game = () => {
 
   const handleBoardInitialization = (config) => {
     if (!!config.width && !!config.height && !gameState.shapes?.length) {
-      console.log('handleBoardInitialization', config)
       setBoardConfig(config)
     }
   }
@@ -89,7 +90,7 @@ const Game = () => {
                      clickedShape.color === gameState.targetShape.color;
     
     if (isCorrect) {
-      playSuccessSound();
+      playSuccessSfx();
       // Correct answer - generate new round with non-overlapping shapes
       const { shapes: newShapes, targetShape: newTargetShape } = generateNewRound(boardConfig);
       
@@ -109,7 +110,7 @@ const Game = () => {
         timestamp: Date.now()
       }]);
     } else {
-      playMissSound();
+      playMissSfx();
       setMissClicked(true)
       setTimeout(() => {
         setMissClicked(false)
@@ -129,8 +130,6 @@ const Game = () => {
     borderRadius: '2px',
   } : {}
 
-  console.log('activeGameWrapperStyles', activeGameWrapperStyles)
-  
   return (
     <Box 
       p={0} 

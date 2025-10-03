@@ -21,12 +21,6 @@ const GameBoard = ({ shapes, targetShape, onShapeClick, onBoardInitialized, miss
     onBoardInitialized(wrapperSize)
   }, [wrapperSize, onBoardInitialized])
 
-  useEffect(() => {
-    if (missClick) {
-      console.log('23232')
-    }
-  }, [missClick])
-
   return (
     <Box 
       className={styles.boardWrapper}

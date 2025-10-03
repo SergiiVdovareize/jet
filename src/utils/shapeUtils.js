@@ -73,11 +73,12 @@ const generateNonOverlappingPosition = (existingShapes, boardConfig, maxAttempts
   const minDistance = 80; // Minimum distance between shape centers (increased for better spacing)
   
   for (let attempt = 0; attempt < maxAttempts; attempt++) {
-    const x = margin + Math.random() * (boardConfig.width - 2 * margin);
-    const y = margin + Math.random() * (boardConfig.height - 2 * margin);
-    
+    const x = Math.floor(margin + Math.random() * (boardConfig.width - 2 * margin));
+    const y = Math.floor(margin + Math.random() * (boardConfig.height - 2 * margin));
+
     const newPosition = { x, y };
     
+    // const overlaps = false
     // Check if this position overlaps with any existing shape
     const overlaps = existingShapes.some(shape => 
       shapesOverlap(newPosition, shape, minDistance)
@@ -90,8 +91,8 @@ const generateNonOverlappingPosition = (existingShapes, boardConfig, maxAttempts
   
   // If we can't find a non-overlapping position, return a random one
   return {
-    x: margin + Math.random() * (boardConfig.width - 2 * margin),
-    y: margin + Math.random() * (boardConfig.height - 2 * margin)
+    x: Math.floor(margin + Math.random() * (boardConfig.width - 2 * margin)),
+    y: Math.floor(margin + Math.random() * (boardConfig.height - 2 * margin))
   };
 };
 

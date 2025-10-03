@@ -13,12 +13,12 @@ const GameHeader = ({ gameState, onStartGame }) => {
   return (
     <Box textAlign="center" mb={6} {...activeHeaderStyles} padding={'12px 0'} margin={0}>
       {(gameActive && !!targetShape) ? (
-        <Box>
+        <Box color="#192e5e">
           <Text fontSize="lg" mb={2}>
-            Find: <strong>{getLocalizedShapeName(targetShape, 'uk')}</strong>
+            Знайди: <strong>{getLocalizedShapeName(targetShape, 'uk')}</strong>
           </Text>
-          <Text fontSize="md" color="blue.600">
-            Score: {score} | Time: {timeLeft}s | Difficulty: {difficulty.toFixed(1)}
+          <Text fontSize="md">
+            Рахунок: {score} | Час: {timeLeft}с | Складність: {difficulty.toFixed(1)}
           </Text>
         </Box>
       ) : (
