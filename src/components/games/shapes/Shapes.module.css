@@ -18,6 +18,19 @@
   max-width: 100%;
   max-height: 100%;
   background-color: #ecf2fc;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+
+/* Remove tap highlight and focus outlines on all children to avoid flash on touch */
+.boardSvg * {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.boardSvg:focus,
+.boardSvg *:focus {
+  outline: none;
 }
 
 .missClick {

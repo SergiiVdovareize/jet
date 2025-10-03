@@ -23,7 +23,7 @@ const GameHeader = ({ gameState, onStartGame }) => {
       ) : (
         <Box>
           <Button colorScheme="blue" onClick={onStartGame} size="lg">
-            {score > 0 ? 'Play Again' : 'Start Game'}
+            {score > 0 ? 'Спробувати ще раз' : 'Почати гру'}
           </Button>
         </Box>
       )}
