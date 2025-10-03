@@ -15,7 +15,7 @@ const GameHeader = ({ gameState, onStartGame }) => {
       {(gameActive && !!targetShape) ? (
         <Box color="#192e5e">
           <Text fontSize="lg" mb={2}>
-            Знайди: <strong>{getLocalizedShapeName(targetShape, 'uk')}</strong>
+            Знайди: <strong>{getLocalizedShapeName(targetShape)}</strong>
           </Text>
           <Text fontSize="md">
             Рахунок: {score} | Час: {timeLeft}с | Складність: {difficulty.toFixed(1)}

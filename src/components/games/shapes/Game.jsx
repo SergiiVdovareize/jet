@@ -39,7 +39,6 @@ const Game = () => {
 
   useEffect(() => {
     if (gameState.gameActive) {
-      console.log('activated')
       setTimeout(playStartSfx, 50)
     } else {
       setTimeout(playFinishSfx, 50)

@@ -7,9 +7,10 @@ export const config = {
 }
 
 // Calculate responsive shape size based on screen dimensions
-export const getResponsiveShapeSize = (baseSize = 30, screenWidth = window.innerWidth) => {
+export const getResponsiveShapeSize = (baseSize = 30) => {
   return baseSize;
   // // Mobile breakpoints
+  // const screenWidth = window.innerWidth;
   // if (screenWidth <= 480) {
   //   // Small mobile devices - larger shapes for better touch interaction
   //   return baseSize * 2;
@@ -39,17 +40,44 @@ export const generatePolygonPoints = (sides, size = getResponsiveShapeSize(50), 
   return points.join(' ');
 };
 
+// getDarkerColor removed; use explicit stroke values in COLOR_CONFIG
+
+// Centralized color configuration
+export const COLOR_CONFIG = {
+  red:    { name: 'червоний',     circleName: 'червоне',     fill: '#ff0000', stroke: '#cc0000' },
+  blue:   { name: 'синій',        circleName: 'синє',        fill: '#0000ff', stroke: '#0000b3' },
+  green:  { name: 'зелений',      circleName: 'зелене',      fill: '#00ff00', stroke: '#00b300' },
+  yellow: { name: 'жовтий',       circleName: 'жовте',       fill: '#ffff00', stroke: '#b3b300' },
+  purple: { name: 'фіолетовий',   circleName: 'фіолетове',   fill: '#800080', stroke: '#4d004d' },
+  orange: { name: 'помаранчевий', circleName: 'помаранчеве', fill: '#ffa500', stroke: '#cc8400' },
+  pink:   { name: 'рожевий',      circleName: 'рожеве',      fill: '#ffc0cb', stroke: '#cc99a3' },
+  cyan:   { name: 'блакитний',    circleName: 'блакитне',    fill: '#00ffff', stroke: '#00b3b3' },
+  teal:   { name: 'бірюзовий',    circleName: 'бірюзове',    fill: '#008080', stroke: '#005959' },
+  lime:   { name: 'лаймовий',     circleName: 'лаймове',     fill: '#32cd32', stroke: '#279b27' },
+  brown:  { name: 'коричневий',   circleName: 'коричневе',   fill: '#8b4513', stroke: '#5e2f0d' }
+};
+
+export const getColorStyle = (colorName) => {
+  const entry = COLOR_CONFIG[colorName];
+  if (entry) return entry;
+  // Fallback: assume provided value is a color
+  return { name: colorName, fill: colorName, stroke: colorName };
+};
+
+// Centralized shape configuration with sides and i18n names
+export const SHAPE_CONFIG = {
+  circle:   { sides: null, name: 'коло' },
+  triangle: { sides: 3,    name: 'трикутник' },
+  square:   { sides: 4,    name: 'квадрат' },
+  pentagon: { sides: 5,    name: "п'ятикутник" },
+  hexagon:  { sides: 6,    name: 'шестикутник' },
+  heptagon: { sides: 7,    name: 'семикутник' },
+  octagon:  { sides: 8,    name: 'восьмикутник' }
+};
+
 // Get number of sides for polygon shapes
 export const getShapeSides = (shapeType) => {
-  const sidesMap = {
-    triangle: 3,
-    square: 4,
-    pentagon: 5,
-    hexagon: 6,
-    heptagon: 7,
-    octagon: 8
-  };
-  return sidesMap[shapeType] || 3;
+  return (SHAPE_CONFIG[shapeType] && SHAPE_CONFIG[shapeType].sides) || 3;
 };
 
 // Check if two shapes overlap
@@ -98,8 +126,8 @@ const generateNonOverlappingPosition = (existingShapes, boardConfig, maxAttempts
 
 // Generate random shape configuration with non-overlapping positions and unique combinations
 export const generateRandomShape = (id, existingShapes = [], boardConfig) => {
-  const shapes = ['circle', 'triangle', 'square', 'pentagon', 'hexagon', 'heptagon', 'octagon'];
-  const colors = ['red', 'blue', 'green', 'yellow', 'purple', 'orange', 'pink', 'cyan'];
+  const shapes = Object.keys(SHAPE_CONFIG);
+  const colors = Object.keys(COLOR_CONFIG);
   
   let shapeType, color;
   let attempts = 0;
@@ -165,56 +193,10 @@ export const generateNewRound = (boardConfig) => {
   return { shapes, targetShape };
 };
 
-// Simple i18n dictionary for shape colors and names
-export const shapeI18n = {
-  en: {
-    colors: {
-      red: 'red',
-      blue: 'blue',
-      green: 'green',
-      yellow: 'yellow',
-      purple: 'purple',
-      orange: 'orange',
-      pink: 'pink',
-      cyan: 'cyan'
-    },
-    shapes: {
-      circle: 'circle',
-      triangle: 'triangle',
-      square: 'square',
-      pentagon: 'pentagon',
-      hexagon: 'hexagon',
-      heptagon: 'heptagon',
-      octagon: 'octagon'
-    }
-  },
-  uk: {
-    colors: {
-      red: 'червоний',
-      blue: 'синій',
-      green: 'зелений',
-      yellow: 'жовтий',
-      purple: 'фіолетовий',
-      orange: 'помаранчевий',
-      pink: 'рожевий',
-      cyan: 'блакитний'
-    },
-    shapes: {
-      circle: 'коло',
-      triangle: 'трикутник',
-      square: 'квадрат',
-      pentagon: "п'ятикутник",
-      hexagon: 'шестикутник',
-      heptagon: 'семикутник',
-      octagon: 'восьмикутник'
-    }
-  }
-};
-
 // Returns a localized label for a given shape like "green triangle"
-export const getLocalizedShapeName = (shape, locale = 'en') => {
-  const dict = shapeI18n[locale] || shapeI18n.en;
-  const colorLabel = dict.colors[shape.color] || shape.color;
-  const shapeLabel = dict.shapes[shape.type] || shape.type;
-  return `${colorLabel} ${shapeLabel}`;
+export const getLocalizedShapeName = (shape) => {
+  const shapeLabel = (SHAPE_CONFIG[shape.type] && SHAPE_CONFIG[shape.type].name) || shape.type;
+  const colorNamesEntry = COLOR_CONFIG[shape.color];
+  const colorProp = shape.type === 'circle' ? (colorNamesEntry.circleName || colorNamesEntry.name) : colorNamesEntry.name;
+  return `${colorProp} ${shapeLabel}`;
 };

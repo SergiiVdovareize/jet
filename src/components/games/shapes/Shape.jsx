@@ -1,14 +1,14 @@
 import React from 'react';
-import { generatePolygonPoints, getShapeSides } from '../../../utils/shapeUtils';
+import { generatePolygonPoints, getShapeSides, getColorStyle } from '../../../utils/shapeUtils';
 
-const Shape = ({ shape, onClick, isTarget }) => {
+const Shape = ({ shape, onClick }) => {
   const { type, color, size, x, y, rotation = 0 } = shape;
   
   const renderShape = () => {
     const centerX = x;
     const centerY = y;
-    const stroke = isTarget ? 'black' : 'transparent';
-    const strokeWidth = isTarget ? 1 : 0
+    const { fill, stroke } = getColorStyle(color);
+    const strokeWidth = 2;
     
     switch (type) {
       case 'circle': {
@@ -17,7 +17,7 @@ const Shape = ({ shape, onClick, isTarget }) => {
             cx={centerX}
             cy={centerY}
             r={size}
-            fill={color}
+            fill={fill}
             stroke={stroke}
             strokeWidth={strokeWidth}
           />
@@ -29,7 +29,7 @@ const Shape = ({ shape, onClick, isTarget }) => {
         return (
           <polygon
             points={points}
-            fill={color}
+            fill={fill}
             stroke={stroke}
             strokeWidth={strokeWidth}
           />
