@@ -19,7 +19,7 @@ const GameBoard = ({ shapes, targetShape, onShapeClick, onBoardInitialized, miss
 
   useEffect(() => {
     onBoardInitialized(wrapperSize)
-  }, [wrapperSize, onBoardInitialized])
+  }, [wrapperSize])
 
   return (
     <Box 

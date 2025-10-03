@@ -11,7 +11,7 @@ const Game = () => {
     shapes: [],
     targetShape: null,
     score: 0,
-    timeLeft: 337,
+    timeLeft: 0,
     gameActive: false,
     difficulty: 1
   });
@@ -65,8 +65,8 @@ const Game = () => {
       setGameState(prev => {
         if (prev.timeLeft <= 1) {
           clearInterval(newTimer);
-          // playFinishSfx();
-          return { ...prev, gameActive: false };
+          setBoardConfig({})
+          return { ...prev, gameActive: false, shapes: [] };
         }
         return { ...prev, timeLeft: prev.timeLeft - 1 };
       });
