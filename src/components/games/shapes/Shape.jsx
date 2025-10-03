@@ -1,5 +1,5 @@
 import React from 'react';
-import { generatePolygonPoints, getShapeSides } from '../../utils/shapeUtils';
+import { generatePolygonPoints, getShapeSides } from '../../../utils/shapeUtils';
 
 const Shape = ({ shape, onClick, isTarget }) => {
   const { type, color, size, x, y } = shape;

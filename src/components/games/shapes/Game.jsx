@@ -1,6 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
+import styles from './Game.module.css';
 import { Box } from '@chakra-ui/react';
-import { generateGameState, generateNewRound } from '../../utils/shapeUtils';
+import { generateGameState, generateNewRound } from '../../../utils/shapeUtils';
+import { playMiss as playMissSfx, playSuccess as playSuccessSfx, close as closeSfx } from '../../../utils/sound';
 import GameHeader from './GameHeader';
 import GameBoard from './GameBoard';
 import GameHistory from './GameHistory';
@@ -19,56 +21,13 @@ const Game = () => {
   const [timer, setTimer] = useState(null);
   const [boardConfig, setBoardConfig] = useState({});
   const [missClicked, setMissClicked] = useState(false);
-  const audioCtxRef = useRef(null);
 
   const playMissSound = () => {
-    try {
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      if (!audioCtxRef.current) {
-        audioCtxRef.current = new AudioCtx();
-      }
-      const ctx = audioCtxRef.current;
-      const oscillator = ctx.createOscillator();
-      const gain = ctx.createGain();
-      oscillator.type = 'sine';
-      oscillator.frequency.setValueAtTime(220, ctx.currentTime);
-      oscillator.connect(gain);
-      gain.connect(ctx.destination);
-      const now = ctx.currentTime;
-      gain.gain.setValueAtTime(0.001, now);
-      gain.gain.exponentialRampToValueAtTime(0.2, now + 0.01);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
-      oscillator.start(now);
-      oscillator.stop(now + 0.16);
-    } catch (_) {
-      // Ignore audio errors (e.g., unsupported environment)
-    }
+    playMissSfx();
   };
 
   const playSuccessSound = () => {
-    try {
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      if (!audioCtxRef.current) {
-        audioCtxRef.current = new AudioCtx();
-      }
-      const ctx = audioCtxRef.current;
-      const oscillator = ctx.createOscillator();
-      const gain = ctx.createGain();
-      oscillator.type = 'sine';
-      oscillator.connect(gain);
-      gain.connect(ctx.destination);
-      const now = ctx.currentTime;
-      // simple two-note up chirp
-      oscillator.frequency.setValueAtTime(523.25, now); // C5
-      oscillator.frequency.exponentialRampToValueAtTime(784.0, now + 0.12); // G5
-      gain.gain.setValueAtTime(0.001, now);
-      gain.gain.exponentialRampToValueAtTime(0.18, now + 0.01);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
-      oscillator.start(now);
-      oscillator.stop(now + 0.19);
-    } catch (_) {
-      // ignore
-    }
+    playSuccessSfx();
   };
   
   // Clean up timer on unmount
@@ -77,6 +36,7 @@ const Game = () => {
       if (timer) {
         clearInterval(timer);
       }
+      closeSfx();
     };
   }, [timer]);
 
@@ -167,10 +127,12 @@ const Game = () => {
   return (
     <Box 
       p={0} 
+      paddingTop={2}
       height="100%" 
       display="flex" 
       flexDirection="column"
       minHeight="0"
+      className={styles.gameWrapper}
     >
       <GameHeader gameState={gameState} onStartGame={activateGame} />
       
