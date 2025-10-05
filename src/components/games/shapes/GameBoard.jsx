@@ -33,6 +33,11 @@ const GameBoard = ({ shapes, targetShape, onShapeClick, onBoardInitialized, miss
         className={`${styles.boardSvg} ${missClick ? styles.missClick : ''}`}
         preserveAspectRatio="xMidYMid meet"
       >
+        <defs>
+          <filter id="shapeShadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="1.5" stdDeviation="1.5" flood-color="#000" flood-opacity="0.25" />
+          </filter>
+        </defs>
         {shapes.map((shape) => (
           <Shape
             key={shape.id}

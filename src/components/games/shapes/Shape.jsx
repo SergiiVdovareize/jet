@@ -39,7 +39,7 @@ const Shape = ({ shape, onClick }) => {
   };
   
   return (
-    <g onClick={() => onClick(shape)} style={{ cursor: 'pointer' }} transform={`rotate(${rotation} ${x} ${y})`}>
+    <g onClick={() => onClick(shape)} style={{ cursor: 'pointer' }} transform={`rotate(${rotation} ${x} ${y})`} filter="url(#shapeShadow)">
       {renderShape()}
     </g>
   );
