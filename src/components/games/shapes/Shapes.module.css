@@ -3,6 +3,13 @@
   border-radius: 2px;
 } */
 
+.gameWrapper {
+  max-width: 600px;
+  max-height: 900px;
+  justify-self: center;
+  width: 100%;
+}
+
 .boardWrapper {
   padding: 0;
   width: 100%;

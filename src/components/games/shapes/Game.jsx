@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box } from '@chakra-ui/react';
+import styles from './Shapes.module.css';
 import { generateGameState, generateNewRound } from '../../../utils/shapeUtils';
 import { playMiss as playMissSfx, playSuccess as playSuccessSfx, playStart as playStartSfx, close as closeSfx, playFinish as playFinishSfx } from '../../../utils/sound';
 import GameHeader from './GameHeader';
@@ -138,6 +139,7 @@ const Game = () => {
       flexDirection="column"
       minHeight="0"
       {...activeGameWrapperStyles}
+      className={styles.gameWrapper}
     >
       <GameHeader gameState={gameState} onStartGame={activateGame} />
       
